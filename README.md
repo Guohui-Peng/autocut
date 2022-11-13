@@ -46,6 +46,27 @@ brew install ffmpeg
 scoop install ffmpeg
 ```
 
+## Docker安装  
+
+首先将分支克隆到本地，然后进入项目目录并编译docker包。
+
+```
+docker build -t autocut .
+```
+
+当主机有Nvidia的显卡，在安装好驱动后，使用下面的命令创建虚拟机可启用GPU加速。
+
+```
+docker run --gpus all -it --rm --name autocut -v E:\autocut:/autocut/video autocut
+```
+
+其中-v是将主机存放视频的文件夹映射到虚拟机的/autocut/video目录。E:\autocut是主机存放视频的目录，需修改为自己主机的目录。
+
+当无GPU可用时不需要加--gpus all参数。
+
+注：因CN直接从github安装容易出现timeout导致安装失败，本项目拉取了whisper到项目放到文件夹下以避免安装出错。  
+如需使用whisper最新版本，应在编译前使用 `git clone https://github.com/openai/whisper.git` 重新克隆whisper最新代码。
+
 ## 更多使用选项
 
 ### 转录某个视频生成`.srt`和`.md`结果。
